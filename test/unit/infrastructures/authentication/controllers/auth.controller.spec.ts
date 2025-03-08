@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing'
 import { AuthController } from '../../../../../src/infrastructures/authentication/controllers/auth.controller'
 import { AuthService } from '../../../../../src/infrastructures/authentication/services/auth.service'
+import { RoleService } from '../../../../../src/infrastructures/authentication/services/role.service'
 import { LoginDto } from '../../../../../src/infrastructures/authentication/dtos/login.dto'
 import { RegisterDto } from '../../../../../src/infrastructures/authentication/dtos/register.dto'
 import { UserRole } from '../../../../../src/modules/user/models/user.model'
@@ -8,6 +9,7 @@ import { UserRole } from '../../../../../src/modules/user/models/user.model'
 describe('AuthController', () => {
   let controller: AuthController
   let authService: AuthService
+  let roleService: RoleService
 
   const mockLoginDto: LoginDto = {
     email: 'test@example.com',
@@ -45,11 +47,19 @@ describe('AuthController', () => {
             register: jest.fn().mockResolvedValue(mockUser),
           },
         },
+        {
+          provide: RoleService,
+          useValue: {
+            getRoles: jest.fn().mockReturnValue(['admin', 'user']),
+            checkRole: jest.fn().mockReturnValue(true),
+          },
+        },
       ],
     }).compile()
 
     controller = module.get<AuthController>(AuthController)
     authService = module.get<AuthService>(AuthService)
+    roleService = module.get<RoleService>(RoleService)
   })
 
   it('should be defined', () => {
