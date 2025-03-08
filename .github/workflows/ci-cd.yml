@@ -26,7 +26,13 @@ jobs:
         cache: 'pnpm'
     
     - name: Install dependencies
-      run: pnpm install --legacy-peer-deps
+      run: pnpm install --no-strict-peer-dependencies --prefer-offline --frozen-lockfile
+    
+    - name: Ensure ESLint version
+      run: pnpm add -D eslint@8.56.0
+    
+    - name: Check ESLint version
+      run: npx eslint --version
     
     - name: Format code
       run: pnpm run format
