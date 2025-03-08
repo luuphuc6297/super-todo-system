@@ -9,7 +9,7 @@ import { UserRole } from '../../../../../src/modules/user/models/user.model'
 describe('AuthController', () => {
   let controller: AuthController
   let authService: AuthService
-  let _roleService: RoleService
+  let roleService: RoleService
 
   const mockLoginDto: LoginDto = {
     email: 'test@example.com',
@@ -52,6 +52,7 @@ describe('AuthController', () => {
           useValue: {
             getRoles: jest.fn().mockReturnValue(['admin', 'user']),
             checkRole: jest.fn().mockReturnValue(true),
+            hasRole: jest.fn().mockReturnValue(true),
           },
         },
       ],
@@ -59,11 +60,12 @@ describe('AuthController', () => {
 
     controller = module.get<AuthController>(AuthController)
     authService = module.get<AuthService>(AuthService)
-    _roleService = module.get<RoleService>(RoleService)
+    roleService = module.get<RoleService>(RoleService)
   })
 
   it('should be defined', () => {
     expect(controller).toBeDefined()
+    expect(roleService).toBeDefined()
   })
 
   describe('login', () => {
@@ -94,16 +96,20 @@ describe('AuthController', () => {
 
   describe('adminOnly', () => {
     it('should return admin message', () => {
+      jest.spyOn(roleService, 'checkRole')
+      
       const result = controller.adminOnly()
-
+      
       expect(result).toEqual({ message: 'This is an admin only endpoint' })
     })
   })
 
   describe('userOnly', () => {
     it('should return user message', () => {
+      jest.spyOn(roleService, 'checkRole')
+      
       const result = controller.userOnly()
-
+      
       expect(result).toEqual({ message: 'This is a user only endpoint' })
     })
   })
