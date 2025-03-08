@@ -99,7 +99,8 @@ export class TaskService {
    * @throws ForbiddenException if a free user tries to update notes
    */
   async update(id: string, updateTaskDto: UpdateTaskDto): Promise<TaskModel> {
-    const _task = await this.findById(id)
+    // Verify task exists
+    await this.findById(id)
     
     // Check user role from token (higher priority)
     if (updateTaskDto.notes !== undefined && updateTaskDto.userRole === UserRole.FREE) {
