@@ -33,17 +33,23 @@ RUN pnpm run build
 FROM node:18-alpine AS production
 WORKDIR /app
 
-# Install runtime dependencies for SQLite3
-RUN apk add --no-cache sqlite-dev
+# Install runtime dependencies and build tools for SQLite3
+RUN apk add --no-cache sqlite-dev python3 make g++ gcc
 
 # Set NODE_ENV
 ENV NODE_ENV production
 
-# Copy built files and production dependencies
+# Copy built files and package files
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/pnpm-lock.yaml ./pnpm-lock.yaml
-COPY --from=builder /app/node_modules ./node_modules
+
+# Install pnpm
+RUN npm install -g pnpm
+
+# Install production dependencies and rebuild sqlite3
+RUN pnpm install --prod --frozen-lockfile
+RUN cd node_modules/sqlite3 && pnpm rebuild
 
 # Create a non-root user
 RUN addgroup --system --gid 1001 nodejs
