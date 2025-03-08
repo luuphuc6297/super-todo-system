@@ -2,6 +2,9 @@
 FROM node:18-alpine AS dependencies
 WORKDIR /app
 
+# Install build dependencies for native modules
+RUN apk add --no-cache python3 make g++ gcc sqlite-dev
+
 # Copy package files
 COPY package.json pnpm-lock.yaml* ./
 
@@ -15,6 +18,9 @@ RUN pnpm install --frozen-lockfile
 FROM node:18-alpine AS builder
 WORKDIR /app
 
+# Install build dependencies for native modules
+RUN apk add --no-cache python3 make g++ gcc sqlite-dev
+
 # Copy dependencies
 COPY --from=dependencies /app/node_modules ./node_modules
 COPY . .
@@ -27,6 +33,9 @@ RUN pnpm run build
 FROM node:18-alpine AS production
 WORKDIR /app
 
+# Install runtime dependencies for SQLite3
+RUN apk add --no-cache sqlite-dev
+
 # Set NODE_ENV
 ENV NODE_ENV production
 
@@ -34,10 +43,7 @@ ENV NODE_ENV production
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/pnpm-lock.yaml ./pnpm-lock.yaml
-
-# Install pnpm and production dependencies only
-RUN npm install -g pnpm
-RUN pnpm install --prod --frozen-lockfile
+COPY --from=builder /app/node_modules ./node_modules
 
 # Create a non-root user
 RUN addgroup --system --gid 1001 nodejs
