@@ -11,6 +11,9 @@ importers:
       '@golevelup/ts-jest':
         specifier: ^0.6.2
         version: 0.6.2
+      '@nestjs/axios':
+        specifier: ^3.0.1
+        version: 3.1.3(@nestjs/common@10.4.15(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.1.14)(rxjs@7.8.2))(axios@1.8.2)(rxjs@7.8.2)
       '@nestjs/common':
         specifier: ^10.4.15
         version: 10.4.15(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.1.14)(rxjs@7.8.2)
@@ -35,6 +38,9 @@ importers:
       '@nestjs/swagger':
         specifier: ^11.0.6
         version: 11.0.6(@nestjs/common@10.4.15(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.1.14)(rxjs@7.8.2))(@nestjs/core@10.4.15)(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.1.14)
+      '@nestjs/terminus':
+        specifier: ^10.3.0
+        version: 10.3.0(dcc142463c11017d55256c41a310b379)
       '@nestjs/typeorm':
         specifier: ^10.0.0
         version: 10.0.2(@nestjs/common@10.4.15(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.1.14)(rxjs@7.8.2))(@nestjs/core@10.4.15)(reflect-metadata@0.1.14)(rxjs@7.8.2)(typeorm@0.3.21(better-sqlite3@11.8.1)(reflect-metadata@0.1.14)(sqlite3@5.1.7)(ts-node@10.9.2(@types/node@20.17.24)(typescript@5.8.2)))
@@ -537,6 +543,13 @@ packages:
   '@microsoft/tsdoc@0.15.1':
     resolution: {integrity: sha512-4aErSrCR/On/e5G2hDP0wjooqDdauzEbIq8hIkIe5pXV0rtWJZvdCEKL0ykZxex+IxIwBp0eGeV48hQN07dXtw==}
 
+  '@nestjs/axios@3.1.3':
+    resolution: {integrity: sha512-RZ/63c1tMxGLqyG3iOCVt7A72oy4x1eM6QEhd4KzCYpaVWW0igq0WSREeRoEZhIxRcZfDfIIkvsOMiM7yfVGZQ==}
+    peerDependencies:
+      '@nestjs/common': ^7.0.0 || ^8.0.0 || ^9.0.0 || ^10.0.0
+      axios: ^1.3.1
+      rxjs: ^6.0.0 || ^7.0.0
+
   '@nestjs/cli@10.4.9':
     resolution: {integrity: sha512-s8qYd97bggqeK7Op3iD49X2MpFtW4LVNLAwXFkfbRxKME6IYT7X0muNTJ2+QfI8hpbNx9isWkrLWIp+g5FOhiA==}
     engines: {node: '>= 16.14'}
@@ -646,6 +659,54 @@ packages:
       class-transformer:
         optional: true
       class-validator:
+        optional: true
+
+  '@nestjs/terminus@10.3.0':
+    resolution: {integrity: sha512-vOJGCwt1OgrFuuxWQwPoaHqy9m9CfIk2qMUX2mosZLK5dFVJSEjHXrklkh3/Fw9PiUnfzvYFfiAdJRzUaxx+5Q==}
+    peerDependencies:
+      '@grpc/grpc-js': '*'
+      '@grpc/proto-loader': '*'
+      '@mikro-orm/core': '*'
+      '@mikro-orm/nestjs': '*'
+      '@nestjs/axios': ^1.0.0 || ^2.0.0 || ^3.0.0
+      '@nestjs/common': ^9.0.0 || ^10.0.0
+      '@nestjs/core': ^9.0.0 || ^10.0.0
+      '@nestjs/microservices': ^9.0.0 || ^10.0.0
+      '@nestjs/mongoose': ^9.0.0 || ^10.0.0
+      '@nestjs/sequelize': ^9.0.0 || ^10.0.0
+      '@nestjs/typeorm': ^9.0.0 || ^10.0.0
+      '@prisma/client': '*'
+      mongoose: '*'
+      reflect-metadata: 0.1.x || 0.2.x
+      rxjs: 7.x
+      sequelize: '*'
+      typeorm: '*'
+    peerDependenciesMeta:
+      '@grpc/grpc-js':
+        optional: true
+      '@grpc/proto-loader':
+        optional: true
+      '@mikro-orm/core':
+        optional: true
+      '@mikro-orm/nestjs':
+        optional: true
+      '@nestjs/axios':
+        optional: true
+      '@nestjs/microservices':
+        optional: true
+      '@nestjs/mongoose':
+        optional: true
+      '@nestjs/sequelize':
+        optional: true
+      '@nestjs/typeorm':
+        optional: true
+      '@prisma/client':
+        optional: true
+      mongoose:
+        optional: true
+      sequelize:
+        optional: true
+      typeorm:
         optional: true
 
   '@nestjs/testing@10.4.15':
@@ -1047,6 +1108,9 @@ packages:
   ajv@8.17.1:
     resolution: {integrity: sha512-B/gBuNg5SiMTrPkC+A2+cW0RszwxYmn6VYxB/inlBStS5nx6xHIt/ehKRhIMhqusl7a8LjQoZnjCs5vhwxOQ1g==}
 
+  ansi-align@3.0.1:
+    resolution: {integrity: sha512-IOfwwBF5iczOjp/WeY4YxyjqAFMQoZufdQWDd19SEExbVLNXqvpzSJ/M7Za4/sCPmQ0+GRquoA7bGcINcxew6w==}
+
   ansi-colors@4.1.3:
     resolution: {integrity: sha512-/6w/C21Pm1A7aZitlI5Ni/2J6FFQN8i1Cvz3kHABAAbw93v/NlvKdVOqz7CCWz/3iv/JplRSEEZ83XION15ovw==}
     engines: {node: '>=6'}
@@ -1126,6 +1190,9 @@ packages:
   asynckit@0.4.0:
     resolution: {integrity: sha512-Oei9OH4tRh0YqU3GxhX79dM/mwVgvbZJaSNaRk+bshkj0S5cfHcgYakreBjrHwatXKbz+IoIdYLxrKim2MjW0Q==}
 
+  axios@1.8.2:
+    resolution: {integrity: sha512-ls4GYBm5aig9vWx8AWDSGLpnpDQRtWAfrjU+EuytuODrFBkqesN2RkOQCBzrA1RQNHw1SmRMSDDDSwzNAYQ6Rg==}
+
   babel-jest@29.7.0:
     resolution: {integrity: sha512-BrvGY3xZSwEcCzKvKsCi2GgHqDqsYkOP4/by5xCgIwGXQxIEh+8ew3gmrE1y7XRR6LHZIj6yLYnUi/mm2KXKBg==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
@@ -1177,6 +1244,10 @@ packages:
   body-parser@1.20.3:
     resolution: {integrity: sha512-7rAxByjUMqQ3/bHJy7D6OGXvx/MMc4IqBn/X0fcM1QUcAItpZrBEYhWGem+tzXH90c+G01ypMcYJBO9Y30203g==}
     engines: {node: '>= 0.8', npm: 1.2.8000 || >= 1.4.16}
+
+  boxen@5.1.2:
+    resolution: {integrity: sha512-9gYgQKXx+1nP8mP7CzFyaUARhg7D3n1dF/FnErWmu9l6JvGpNUN278h0aSb+QjoiKSWG+iZ3uHrcqk0qrY9RQQ==}
+    engines: {node: '>=10'}
 
   brace-expansion@1.1.11:
     resolution: {integrity: sha512-iCuPHDFgrHX7H2vEI/5xpz07zSHB00TpugqhmYtVmMO6518mCuRMoOYFldEBl0g187ufozdaHgWKcYFb61qGiA==}
@@ -1266,6 +1337,10 @@ packages:
   chardet@0.7.0:
     resolution: {integrity: sha512-mT8iDcrh03qDGRRmoA2hmBJnxpllMR+0/0qlzjqZES6NdiWDcZkCNAk4rPFZ9Q85r27unkiNNg8ZOiwZXBHwcA==}
 
+  check-disk-space@3.4.0:
+    resolution: {integrity: sha512-drVkSqfwA+TvuEhFipiR1OC9boEGZL5RrWvVsOthdcvQNXyCCuKkEiTOTXZ7qxSf/GLwq4GvzfrQD/Wz325hgw==}
+    engines: {node: '>=16'}
+
   chokidar@3.6.0:
     resolution: {integrity: sha512-7VT13fmjotKpGipCW9JEQAusEPE+Ei8nl6/g4FBAmIm0GOOLMua9NDDo/DWp0ZAxCr3cPq5ZpBqmPAQgDda2Pw==}
     engines: {node: '>= 8.10.0'}
@@ -1296,6 +1371,10 @@ packages:
 
   clean-stack@2.2.0:
     resolution: {integrity: sha512-4diC9HaTE+KRAMWhDhrGOECgWZxoevMc5TlkObMqNSsVU62PYzXZ/SMTjzyGAFF1YusgxGcSWTEXBhp0CPwQ1A==}
+    engines: {node: '>=6'}
+
+  cli-boxes@2.2.1:
+    resolution: {integrity: sha512-y4coMcylgSCdVinjiDBuR8PCC2bLjyGTwEmPb9NHR/QaNU6EUOXcTY/s6VjGMD6ENSEaeQYHCY0GNGS5jfMwPw==}
     engines: {node: '>=6'}
 
   cli-cursor@3.1.0:
@@ -1822,6 +1901,15 @@ packages:
 
   fn.name@1.1.0:
     resolution: {integrity: sha512-GRnmB5gPyJpAhTQdSZTSp9uaPSvl09KoYcMQtsB9rQoOmzs9dH6ffeccH+Z+cv6P68Hu5bC6JjRh4Ah/mHSNRw==}
+
+  follow-redirects@1.15.9:
+    resolution: {integrity: sha512-gew4GsXizNgdoRyqmyfMHyAmXsZDk6mHkSxZFCzW9gwlbtOW44CDtYavM+y+72qD/Vq2l550kMF52DT8fOLJqQ==}
+    engines: {node: '>=4.0'}
+    peerDependencies:
+      debug: '*'
+    peerDependenciesMeta:
+      debug:
+        optional: true
 
   foreground-child@3.3.1:
     resolution: {integrity: sha512-gIXjKqtFuWEgzFRJA9WCQeSJLZDjgJUOMCMzxtvFq/37KojM1BFGufqsCy0r4qSQmYLsZYMeyRqzIWOMup03sw==}
@@ -2888,6 +2976,9 @@ packages:
     resolution: {integrity: sha512-llQsMLSUDUPT44jdrU/O37qlnifitDP+ZwrmmZcoSKyLKvtZxpyV0n2/bD/N4tBAAZ/gJEdZU7KMraoK1+XYAg==}
     engines: {node: '>= 0.10'}
 
+  proxy-from-env@1.1.0:
+    resolution: {integrity: sha512-D+zkORCbA9f1tdWRK0RaCR3GPv50cMxcrz4X8k5LTSUD1Dkw47mKJEZQNunItRTkWwgtaUSo1RVFRIG9ZXiFYg==}
+
   pump@3.0.2:
     resolution: {integrity: sha512-tUPXtzlGM8FE3P0ZL6DVs/3P58k9nk8/jZeQCurTJylQA8qFYzHFfhBJkuqyE0FifOsQ0uKWekiZ5g8wtr28cw==}
 
@@ -3645,6 +3736,10 @@ packages:
   wide-align@1.1.5:
     resolution: {integrity: sha512-eDMORYaPNZ4sQIuuYPDHdQvf4gyCF9rEEV/yPxGfwPkRodwEgiMUUXTx/dex+Me0wxx53S+NgUHaP7y3MGlDmg==}
 
+  widest-line@3.1.0:
+    resolution: {integrity: sha512-NsmoXalsWVDMGupxZ5R08ka9flZjjiLvHVAWYOKtiKM8ujtZWr9cRffak+uSE48+Ob8ObalXpwyeUiyDD6QFgg==}
+    engines: {node: '>=8'}
+
   winston-transport@4.9.0:
     resolution: {integrity: sha512-8drMJ4rkgaPo1Me4zD/3WLfI/zPdA9o2IipKODunnGDcuqbHwjsbB79ylv04LCGGzU0xQ6vTznOMpQGaLhhm6A==}
     engines: {node: '>= 12.0.0'}
@@ -4212,6 +4307,12 @@ snapshots:
 
   '@microsoft/tsdoc@0.15.1': {}
 
+  '@nestjs/axios@3.1.3(@nestjs/common@10.4.15(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.1.14)(rxjs@7.8.2))(axios@1.8.2)(rxjs@7.8.2)':
+    dependencies:
+      '@nestjs/common': 10.4.15(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.1.14)(rxjs@7.8.2)
+      axios: 1.8.2
+      rxjs: 7.8.2
+
   '@nestjs/cli@10.4.9':
     dependencies:
       '@angular-devkit/core': 17.3.11(chokidar@3.6.0)
@@ -4349,6 +4450,21 @@ snapshots:
     optionalDependencies:
       class-transformer: 0.5.1
       class-validator: 0.14.1
+
+  '@nestjs/terminus@10.3.0(dcc142463c11017d55256c41a310b379)':
+    dependencies:
+      '@nestjs/common': 10.4.15(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.1.14)(rxjs@7.8.2)
+      '@nestjs/core': 10.4.15(@nestjs/common@10.4.15(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.1.14)(rxjs@7.8.2))(@nestjs/platform-express@10.4.15)(encoding@0.1.13)(reflect-metadata@0.1.14)(rxjs@7.8.2)
+      boxen: 5.1.2
+      check-disk-space: 3.4.0
+      reflect-metadata: 0.1.14
+      rxjs: 7.8.2
+    optionalDependencies:
+      '@nestjs/axios': 3.1.3(@nestjs/common@10.4.15(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.1.14)(rxjs@7.8.2))(axios@1.8.2)(rxjs@7.8.2)
+      '@nestjs/sequelize': 11.0.0(@nestjs/common@10.4.15(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.1.14)(rxjs@7.8.2))(@nestjs/core@10.4.15)(reflect-metadata@0.1.14)(rxjs@7.8.2)(sequelize-typescript@2.1.6(@types/node@20.17.24)(@types/validator@13.12.2)(reflect-metadata@0.1.14)(sequelize@6.37.6(sqlite3@5.1.7)))(sequelize@6.37.6(sqlite3@5.1.7))
+      '@nestjs/typeorm': 10.0.2(@nestjs/common@10.4.15(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.1.14)(rxjs@7.8.2))(@nestjs/core@10.4.15)(reflect-metadata@0.1.14)(rxjs@7.8.2)(typeorm@0.3.21(better-sqlite3@11.8.1)(reflect-metadata@0.1.14)(sqlite3@5.1.7)(ts-node@10.9.2(@types/node@20.17.24)(typescript@5.8.2)))
+      sequelize: 6.37.6(sqlite3@5.1.7)
+      typeorm: 0.3.21(better-sqlite3@11.8.1)(reflect-metadata@0.1.14)(sqlite3@5.1.7)(ts-node@10.9.2(@types/node@20.17.24)(typescript@5.8.2))
 
   '@nestjs/testing@10.4.15(@nestjs/common@10.4.15(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.1.14)(rxjs@7.8.2))(@nestjs/core@10.4.15)(@nestjs/platform-express@10.4.15)':
     dependencies:
@@ -4849,6 +4965,10 @@ snapshots:
       json-schema-traverse: 1.0.0
       require-from-string: 2.0.2
 
+  ansi-align@3.0.1:
+    dependencies:
+      string-width: 4.2.3
+
   ansi-colors@4.1.3: {}
 
   ansi-escapes@4.3.2:
@@ -4906,6 +5026,14 @@ snapshots:
   async@3.2.6: {}
 
   asynckit@0.4.0: {}
+
+  axios@1.8.2:
+    dependencies:
+      follow-redirects: 1.15.9
+      form-data: 4.0.2
+      proxy-from-env: 1.1.0
+    transitivePeerDependencies:
+      - debug
 
   babel-jest@29.7.0(@babel/core@7.26.9):
     dependencies:
@@ -5001,6 +5129,17 @@ snapshots:
       unpipe: 1.0.0
     transitivePeerDependencies:
       - supports-color
+
+  boxen@5.1.2:
+    dependencies:
+      ansi-align: 3.0.1
+      camelcase: 6.3.0
+      chalk: 4.1.2
+      cli-boxes: 2.2.1
+      string-width: 4.2.3
+      type-fest: 0.20.2
+      widest-line: 3.1.0
+      wrap-ansi: 7.0.0
 
   brace-expansion@1.1.11:
     dependencies:
@@ -5110,6 +5249,8 @@ snapshots:
 
   chardet@0.7.0: {}
 
+  check-disk-space@3.4.0: {}
+
   chokidar@3.6.0:
     dependencies:
       anymatch: 3.1.3
@@ -5142,6 +5283,8 @@ snapshots:
 
   clean-stack@2.2.0:
     optional: true
+
+  cli-boxes@2.2.1: {}
 
   cli-cursor@3.1.0:
     dependencies:
@@ -5697,6 +5840,8 @@ snapshots:
   flatted@3.3.3: {}
 
   fn.name@1.1.0: {}
+
+  follow-redirects@1.15.9: {}
 
   foreground-child@3.3.1:
     dependencies:
@@ -6988,6 +7133,8 @@ snapshots:
       forwarded: 0.2.0
       ipaddr.js: 1.9.1
 
+  proxy-from-env@1.1.0: {}
+
   pump@3.0.2:
     dependencies:
       end-of-stream: 1.4.4
@@ -7730,6 +7877,10 @@ snapshots:
     dependencies:
       string-width: 4.2.3
     optional: true
+
+  widest-line@3.1.0:
+    dependencies:
+      string-width: 4.2.3
 
   winston-transport@4.9.0:
     dependencies:

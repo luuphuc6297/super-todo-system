@@ -110,22 +110,17 @@ jobs:
         retention-days: 7
   
   # deploy:
-  #   needs: e2e-test
+  #   needs: test
   #   if: github.ref == 'refs/heads/main' && github.event_name == 'push'
   #   runs-on: ubuntu-latest
     
   #   steps:
   #   - uses: actions/checkout@v4
     
-  #   - name: Setup Node.js
-  #     uses: actions/setup-node@v4
-  #     with:
-  #       node-version: '18'
-    
   #   - name: Install Railway CLI
   #     run: npm install -g @railway/cli
     
   #   - name: Deploy to Railway
-  #     run: railway up
+  #     run: railway up --detach
   #     env:
   #       RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }} 
