@@ -1,0 +1,13 @@
+export const DATABASE_DELETED_AT_FIELD_NAME = 'deletedAt'
+export const DATABASE_CREATED_AT_FIELD_NAME = 'createdAt'
+export const DATABASE_UPDATED_AT_FIELD_NAME = 'updatedAt'
+
+export const DATABASE_DEFAULT_PAGE = 1
+export const DATABASE_DEFAULT_PER_PAGE = 10
+export const DATABASE_DEFAULT_ORDER_DIRECTION = 'ASC'
+export const DATABASE_DEFAULT_ORDER_BY = 'createdAt'
+export const DATABASE_DEFAULT_AVAILABLE_ORDER_BY = ['createdAt']
+export const DATABASE_DEFAULT_AVAILABLE_SEARCH = []
+
+export const DATABASE_DEFAULT_TIMESTAMP = true
+export const DATABASE_DEFAULT_SOFT_DELETE = true

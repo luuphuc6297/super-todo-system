@@ -1,0 +1,22 @@
+{
+  "moduleFileExtensions": ["js", "json", "ts"],
+  "rootDir": ".",
+  "testEnvironment": "node",
+  "testMatch": ["**/*.integration-spec.ts", "**/*.e2e-spec.ts"],
+  "transform": {
+    "^.+\\.(t|j)s$": "ts-jest"
+  },
+  "moduleNameMapper": {
+    "^@app/(.*)$": "<rootDir>/../src/app/$1",
+    "^@modules/(.*)$": "<rootDir>/../src/modules/$1",
+    "^@infras/(.*)$": "<rootDir>/../src/infrastructures/$1",
+    "^@configs/(.*)$": "<rootDir>/../src/configs/$1",
+    "^@shared/(.*)$": "<rootDir>/../src/shared/$1",
+    "^@router/(.*)$": "<rootDir>/../src/router/$1",
+    "^@languages/(.*)$": "<rootDir>/../src/languages/$1",
+    "^src/(.*)$": "<rootDir>/../src/$1"
+  },
+  "forceExit": true,
+  "detectOpenHandles": true,
+  "clearMocks": true
+}
