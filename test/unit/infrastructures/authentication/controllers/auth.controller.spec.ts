@@ -9,7 +9,7 @@ import { UserRole } from '../../../../../src/modules/user/models/user.model'
 describe('AuthController', () => {
   let controller: AuthController
   let authService: AuthService
-  let roleService: RoleService
+  let _roleService: RoleService
 
   const mockLoginDto: LoginDto = {
     email: 'test@example.com',
@@ -59,7 +59,7 @@ describe('AuthController', () => {
 
     controller = module.get<AuthController>(AuthController)
     authService = module.get<AuthService>(AuthService)
-    roleService = module.get<RoleService>(RoleService)
+    _roleService = module.get<RoleService>(RoleService)
   })
 
   it('should be defined', () => {
