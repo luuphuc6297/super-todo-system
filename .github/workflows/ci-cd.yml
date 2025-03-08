@@ -60,21 +60,47 @@ jobs:
     
     - name: Lint
       run: pnpm run lint
+
+  test:
+    needs: lint-and-format
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
     
-    # Các bước test và deploy đã được tạm thời bỏ qua
-    # Có thể bỏ comment các bước này khi cần chạy test và deploy
+    - name: Install pnpm
+      uses: pnpm/action-setup@v2
+      with:
+        version: 8
+        run_install: false
     
-    # - name: Build
-    #   run: pnpm run build
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+        cache: 'pnpm'
     
-    # - name: Test
-    #   run: pnpm run test
+    - name: Install dependencies
+      run: pnpm install --no-strict-peer-dependencies --prefer-offline
     
-    # - name: E2E Tests
-    #   run: pnpm run test:e2e
+    - name: Install test dependencies
+      run: pnpm add -D @golevelup/ts-jest
+    
+    - name: Run unit tests
+      run: pnpm run test
+      
+    - name: Run test coverage
+      run: pnpm run test:cov
+    
+    - name: Upload coverage reports
+      uses: actions/upload-artifact@v3
+      with:
+        name: coverage-report
+        path: ./coverage
+        retention-days: 7
   
   # deploy:
-  #   needs: lint-and-format
+  #   needs: e2e-test
   #   if: github.ref == 'refs/heads/main' && github.event_name == 'push'
   #   runs-on: ubuntu-latest
     

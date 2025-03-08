@@ -24,6 +24,7 @@
     "test:integration": "jest --config ./test/jest-e2e.json --testPathPattern=\"integration\""
   },
   "dependencies": {
+    "@golevelup/ts-jest": "^0.6.2",
     "@nestjs/common": "^10.4.15",
     "@nestjs/config": "^4.0.1",
     "@nestjs/core": "^10.4.15",
@@ -89,7 +90,7 @@
       "json",
       "ts"
     ],
-    "rootDir": "src",
+    "rootDir": ".",
     "testRegex": ".*\\.spec\\.ts$",
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
@@ -97,16 +98,16 @@
     "collectCoverageFrom": [
       "**/*.(t|j)s"
     ],
-    "coverageDirectory": "../coverage",
+    "coverageDirectory": "./coverage",
     "testEnvironment": "node",
     "moduleNameMapper": {
-      "^@app/(.*)$": "<rootDir>/app/$1",
-      "^@configs/(.*)$": "<rootDir>/configs/$1",
-      "^@infras/(.*)$": "<rootDir>/infrastructures/$1",
-      "^@modules/(.*)$": "<rootDir>/modules/$1",
-      "^@router/(.*)$": "<rootDir>/router/$1",
-      "^@shared/(.*)$": "<rootDir>/shared/$1",
-      "^@languages/(.*)$": "<rootDir>/languages/$1"
+      "^@app/(.*)$": "<rootDir>/src/app/$1",
+      "^@configs/(.*)$": "<rootDir>/src/configs/$1",
+      "^@infras/(.*)$": "<rootDir>/src/infrastructures/$1",
+      "^@modules/(.*)$": "<rootDir>/src/modules/$1",
+      "^@router/(.*)$": "<rootDir>/src/router/$1",
+      "^@shared/(.*)$": "<rootDir>/src/shared/$1",
+      "^@languages/(.*)$": "<rootDir>/src/languages/$1"
     }
   }
 }
