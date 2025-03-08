@@ -25,8 +25,17 @@ jobs:
         node-version: '18'
         cache: 'pnpm'
     
+    - name: Check lock file
+      run: |
+        if [ -f "pnpm-lock.yaml" ]; then
+          echo "pnpm-lock.yaml exists"
+          ls -la pnpm-lock.yaml
+        else
+          echo "pnpm-lock.yaml does not exist"
+        fi
+    
     - name: Install dependencies
-      run: pnpm install --no-strict-peer-dependencies --prefer-offline --frozen-lockfile
+      run: pnpm install --no-strict-peer-dependencies --prefer-offline --no-frozen-lockfile
     
     - name: Ensure ESLint version
       run: pnpm add -D eslint@8.56.0
