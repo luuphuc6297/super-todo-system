@@ -32,16 +32,31 @@ jobs:
           ls -la pnpm-lock.yaml
         else
           echo "pnpm-lock.yaml does not exist"
+          echo "Creating a new lock file"
+          pnpm install --no-strict-peer-dependencies
         fi
     
     - name: Install dependencies
-      run: pnpm install --no-strict-peer-dependencies --prefer-offline --no-frozen-lockfile
+      run: pnpm install --no-strict-peer-dependencies --prefer-offline
     
     - name: Ensure ESLint version
       run: pnpm add -D eslint@8.56.0
     
     - name: Check ESLint version
       run: npx eslint --version
+    
+    - name: Fix ESLint config
+      run: |
+        if [ -f "eslint.config.js" ]; then
+          echo "Removing eslint.config.js to use .eslintrc.js instead"
+          rm eslint.config.js
+        fi
+        if [ -f ".eslintrc.js" ]; then
+          echo ".eslintrc.js exists"
+          cat .eslintrc.js
+        else
+          echo ".eslintrc.js does not exist"
+        fi
     
     - name: Format code
       run: pnpm run format
