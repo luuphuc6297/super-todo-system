@@ -101,7 +101,7 @@ describe('JwtAuthGuard', () => {
         },
       }
 
-      // @ts-ignore: Private method test
+      // @ts-expect-error: Private method test
       const result = guard.extractTokenFromHeader(mockRequest as any)
 
       expect(result).toBe('test-token')
@@ -112,7 +112,7 @@ describe('JwtAuthGuard', () => {
         headers: {},
       }
 
-      // @ts-ignore: Private method test
+      // @ts-expect-error: Private method test
       const result = guard.extractTokenFromHeader(mockRequest as any)
 
       expect(result).toBeUndefined()
@@ -125,7 +125,7 @@ describe('JwtAuthGuard', () => {
         },
       }
 
-      // @ts-ignore: Private method test
+      // @ts-expect-error: Private method test
       const result = guard.extractTokenFromHeader(mockRequest as any)
 
       expect(result).toBeUndefined()

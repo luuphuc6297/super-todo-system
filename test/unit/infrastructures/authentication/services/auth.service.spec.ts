@@ -12,7 +12,6 @@ import { UserService } from '../../../../../src/modules/user/services/user.servi
 describe('AuthService', () => {
   let service: AuthService
   let jwtService: JwtService
-  let configService: ConfigService
   let userService: UserService
   let helperHashService: HelperHashService
 
@@ -94,7 +93,6 @@ describe('AuthService', () => {
 
     service = module.get<AuthService>(AuthService)
     jwtService = module.get<JwtService>(JwtService)
-    configService = module.get<ConfigService>(ConfigService)
     userService = module.get<UserService>(UserService)
     helperHashService = module.get<HelperHashService>(HelperHashService)
   })
