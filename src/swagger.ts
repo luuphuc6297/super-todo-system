@@ -3,8 +3,6 @@ import { Logger } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { NestApplication } from '@nestjs/core'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
-import * as fs from 'fs'
-import * as path from 'path'
 
 export default async function (app: NestApplication) {
   const configService = app.get(ConfigService)

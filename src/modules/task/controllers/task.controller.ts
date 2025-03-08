@@ -1,9 +1,8 @@
 import { IDatabaseFindAllOptions } from '@infras/database/interfaces/database.interface'
 import { PaginationDto } from '@infras/http/dtos/pagination.dto'
 import { UserRole } from '@modules/user/models/user.model'
-import { Body, Controller, Delete, Get, Param, Post, Put, Query, UseGuards, HttpCode } from '@nestjs/common'
+import { Body, Controller, Delete, Get, Param, Post, Put, Query, UseGuards } from '@nestjs/common'
 import {
-  ApiBearerAuth,
   ApiBody,
   ApiOperation,
   ApiParam,
@@ -117,7 +116,7 @@ export class TaskController {
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiResponse({ status: 404, description: 'Task not found' })
   @ApiParam({ name: 'id', description: 'Task ID' })
-  async delete(@Param('id') id: string): Promise<{}> {
+  async delete(@Param('id') id: string): Promise<Record<string, never>> {
     await this.taskService.delete(id)
     return {}
   }
