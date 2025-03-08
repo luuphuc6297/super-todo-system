@@ -9,7 +9,7 @@ export default registerAs(
     http: {
       enable: process.env.APP_HTTP_ENABLE === 'true',
       host: process.env.APP_HTTP_HOST || 'localhost',
-      port: Number(process.env.APP_HTTP_PORT) || 3000,
+      port: Number(process.env.APP_HTTP_PORT) || 8080,
     },
 
     globalPrefix: process.env.APP_GLOBAL_PREFIX || 'api',

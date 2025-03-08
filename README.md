@@ -74,7 +74,7 @@ $ pnpm run test:cov
 After starting the application, you can access the Swagger documentation at:
 
 ```
-http://localhost:3000/api/docs
+http://localhost:8080/api/docs
 ```
 
 ## License
