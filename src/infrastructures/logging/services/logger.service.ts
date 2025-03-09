@@ -10,7 +10,14 @@ export class LoggerService implements NestLoggerService {
 
   constructor(private readonly configService: ConfigService) {
     const logLevel = this.configService.get<string>('app.log.level') || 'info'
-    const isProduction = this.configService.get<string>('app.env') === 'production'
+    const env = this.configService.get<string>('app.env') || 'development'
+
+    // In production environment, we'll only use console transport
+    // This avoids permission issues when running in containerized environments
+    const isProduction = env === 'production'
+
+    // Disable file logging in production to avoid permission issues
+    const useFileLogging = !isProduction
 
     this.logger = createLogger({
       level: logLevel,
@@ -32,7 +39,7 @@ export class LoggerService implements NestLoggerService {
             })
           ),
         }),
-        ...(isProduction
+        ...(useFileLogging
           ? [
               new transports.File({
                 filename: 'logs/error.log',
