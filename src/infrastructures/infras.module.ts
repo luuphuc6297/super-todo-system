@@ -1,5 +1,6 @@
+import configs from '@configs/index'
 import { forwardRef, Module } from '@nestjs/common'
-import { ConfigModule, ConfigService } from '@nestjs/config'
+import { ConfigModule } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { AuthenticationModule } from './authentication/authentication.module'
 import { DatabaseModule } from './database/database.module'
@@ -8,7 +9,6 @@ import { HelperModule } from './helper/helper.module'
 import { HttpModule } from './http/http.module'
 import { LoggingModule } from './logging/logging.module'
 import { ValidationModule } from './validation/validation.module'
-import configs from '@configs/index'
 
 @Module({
   imports: [
