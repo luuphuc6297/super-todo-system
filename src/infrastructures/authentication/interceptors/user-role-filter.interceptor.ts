@@ -71,13 +71,23 @@ export class UserRoleFilterInterceptor implements NestInterceptor {
   }
 
   private getUserRoleFromRequest(request: Request): UserRole {
-    // Priority: get from URL query parameter
+    // Priority 1: get from URL query parameter
     const roleFromQuery = request.query.userRole as string
-    if (roleFromQuery && Object.values(UserRole).includes(roleFromQuery as UserRole)) {
-      return roleFromQuery as UserRole
+    if (roleFromQuery) {
+      // Convert to lowercase for case-insensitive comparison
+      const normalizedRole = roleFromQuery.toLowerCase()
+
+      if (normalizedRole === 'free') {
+        return UserRole.FREE
+      } else if (normalizedRole === 'paid') {
+        return UserRole.PAID
+      } else if (Object.values(UserRole).includes(roleFromQuery as UserRole)) {
+        // If it's already a valid UserRole enum value, use it directly
+        return roleFromQuery as UserRole
+      }
     }
 
-    // If not in query, get from authenticated user
+    // Priority 2: get from authenticated user
     const user = request.user as { role?: UserRole } | undefined
     if (user?.role) {
       return user.role

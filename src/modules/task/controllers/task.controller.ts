@@ -1,27 +1,19 @@
-import { IDatabaseFindAllOptions } from '@infras/database/interfaces/database.interface'
-import { PaginationDto } from '@infras/http/dtos/pagination.dto'
-import { UserRole } from '@modules/user/models/user.model'
-import { Body, Controller, Delete, Get, Param, Post, Put, Query, UseGuards } from '@nestjs/common'
-import {
-  ApiBody,
-  ApiOperation,
-  ApiParam,
-  ApiQuery,
-  ApiResponse,
-  ApiTags,
-} from '@nestjs/swagger'
 import { Auth } from '@infras/authentication/decorators/auth.decorator'
+import { CurrentUser } from '@infras/authentication/decorators/current-user.decorator'
 import { JwtAuthGuard } from '@infras/authentication/guards/jwt.guard'
 import { RoleGuard } from '@infras/authentication/guards/role.guard'
-import { CreateTaskDto } from '../dtos/create-task.dto'
+import { IDatabaseFindAllOptions } from '@infras/database/interfaces/database.interface'
+import { PaginationDto } from '@infras/http/dtos/pagination.dto'
+import { UserModel, UserRole } from '@modules/user/models/user.model'
+import { Body, Controller, Delete, Get, Param, Post, Put, Query, UseGuards } from '@nestjs/common'
+import { ApiBody, ApiOperation, ApiParam, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { CreateTaskTagDto } from '../dtos/create-task-tag.dto'
-import { UpdateTaskDto } from '../dtos/update-task.dto'
-import { TaskService } from '../services/task.service'
-import { CurrentUser } from '@infras/authentication/decorators/current-user.decorator'
+import { CreateTaskDto } from '../dtos/create-task.dto'
 import { TaskResponseDto } from '../dtos/task-response.dto'
+import { UpdateTaskDto } from '../dtos/update-task.dto'
 import { TaskTagModel } from '../models/task-tag.model'
 import { TaskModel, TaskStatus } from '../models/task.model'
-import { UserModel } from '@modules/user/models/user.model'
+import { TaskService } from '../services/task.service'
 
 @ApiTags('tasks')
 @Controller()
@@ -40,12 +32,21 @@ export class TaskController {
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiQuery({ name: 'page', required: false, type: Number })
   @ApiQuery({ name: 'perPage', required: false, type: Number })
+  @ApiQuery({
+    name: 'userRole',
+    required: false,
+    enum: UserRole,
+    description: 'Filter by user role (free or paid)',
+  })
   async findAll(@Query() paginationDto: PaginationDto): Promise<TaskModel[]> {
     const options: IDatabaseFindAllOptions = {
       limit: paginationDto.perPage,
       skip: (paginationDto.page - 1) * paginationDto.perPage,
       join: true,
     }
+
+    // The UserRoleMiddleware and UserRoleFilterInterceptor will handle the userRole parameter
+    // and filter the response accordingly
     return this.taskService.findAll(options)
   }
 
@@ -60,6 +61,12 @@ export class TaskController {
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiResponse({ status: 404, description: 'Task not found' })
   @ApiParam({ name: 'id', description: 'Task ID' })
+  @ApiQuery({
+    name: 'userRole',
+    required: false,
+    enum: UserRole,
+    description: 'Filter by user role (free or paid)',
+  })
   async findById(@Param('id') id: string): Promise<TaskModel> {
     return this.taskService.findById(id)
   }
@@ -73,14 +80,17 @@ export class TaskController {
     type: TaskModel,
   })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
-  @ApiResponse({ status: 403, description: 'Forbidden - Only paid users and admins can create tasks' })
+  @ApiResponse({
+    status: 403,
+    description: 'Forbidden - Only paid users and admins can create tasks',
+  })
   @ApiBody({ type: CreateTaskDto })
   async create(
     @Body() createTaskDto: CreateTaskDto,
     @CurrentUser() user: UserModel
   ): Promise<TaskModel> {
-    createTaskDto.creatorId = user.id;
-    createTaskDto.userRole = user.role;
+    createTaskDto.creatorId = user.id
+    createTaskDto.userRole = user.role
     return this.taskService.create(createTaskDto)
   }
 
@@ -101,7 +111,7 @@ export class TaskController {
     @Body() updateTaskDto: UpdateTaskDto,
     @CurrentUser() user: UserModel
   ): Promise<TaskModel> {
-    updateTaskDto.userRole = user.role;
+    updateTaskDto.userRole = user.role
     return this.taskService.update(id, updateTaskDto)
   }
 
