@@ -111,6 +111,89 @@ The application follows a modular architecture based on NestJS framework:
 8. **Interceptors**: Process requests/responses (e.g., filtering data based on user role)
 9. **Middlewares**: Process requests (e.g., extracting user role from URL)
 
+### Module Architecture
+
+The application is structured around several key modules that interact with each other:
+
+```
+                                  ┌─────────────┐
+                                  │  AppModule  │
+                                  └──────┬──────┘
+                                         │
+                 ┌────────────────┬──────┴───────┬────────────────┐
+                 │                │              │                │
+        ┌────────▼─────────┐     ┌▼─────────┐    ▼          ┌─────▼─────┐
+        │  InfrasModule    │     │RouterModule    │          │HealthModule│
+        └────────┬─────────┘     └┬─────────┘                └─────┬─────┘
+                 │                │                                 │
+┌────────────────┼────────────────┼─────────────────────┐          │
+│                │                │                     │          │
+▼                ▼                ▼                     ▼          ▼
+DatabaseModule  AuthModule    ErrorModule        ┌─────────────┐  Health
+     │             │             │               │RoutesModules│  Checks
+     │             │             │               └──────┬──────┘
+     │             │             │                      │
+     │             │             │         ┌────────────┼───────────┐
+     │             │             │         │            │           │
+     ▼             ▼             ▼         ▼            ▼           ▼
+  Database      Security      Exception  UserModule  TaskModule  CategoryModule
+  Services                    Handling      │            │           │
+                                            │            │           │
+                                            ▼            ▼           ▼
+                                         Models       Models      Models
+                                         Services     Services    Services
+                                         Repos        Repos       Repos
+```
+
+Key module interactions:
+- **AppModule**: The root module that imports and coordinates all other modules
+- **InfrasModule**: Provides infrastructure services like database, authentication, error handling
+- **RouterModule**: Configures API routes and connects them to the appropriate controllers
+- **Domain Modules** (User, Task, Category, Tag): Implement business logic for specific domains
+- **Authentication**: Handles user authentication and authorization across the application
+
+### Folder Structure
+
+The project follows a well-organized folder structure:
+
+```
+src/
+├── app/                      # Application core
+│   ├── controllers/          # Main application controllers
+│   ├── services/             # Main application services
+│   ├── constants/            # Application constants
+│   ├── docs/                 # Documentation related files
+│   └── serializations/       # Response serialization
+├── configs/                  # Configuration files
+├── infrastructures/          # Infrastructure components
+│   ├── authentication/       # Authentication services and guards
+│   ├── database/             # Database configuration and services
+│   ├── error/                # Error handling
+│   ├── health/               # Health check endpoints
+│   ├── helper/               # Helper utilities
+│   ├── http/                 # HTTP related utilities
+│   ├── logging/              # Logging services
+│   ├── seed/                 # Database seeding
+│   └── validation/           # Input validation
+├── languages/                # Internationalization files
+├── modules/                  # Domain modules
+│   ├── category/             # Category domain
+│   │   ├── controllers/      # Category controllers
+│   │   ├── dtos/             # Category data transfer objects
+│   │   ├── models/           # Category data models
+│   │   ├── repositories/     # Category data access
+│   │   └── services/         # Category business logic
+│   ├── task/                 # Task domain (similar structure)
+│   ├── tag/                  # Tag domain (similar structure)
+│   ├── user/                 # User domain (similar structure)
+│   ├── payment/              # Payment domain (similar structure)
+│   └── subscription/         # Subscription domain (similar structure)
+├── router/                   # API routing
+│   └── routes/               # Route definitions
+├── main.ts                   # Application entry point
+└── swagger.ts               # Swagger documentation setup
+```
+
 ### Database
 
 - In-memory SQLite database is used for simplicity and ease of setup
@@ -151,9 +234,9 @@ This allows testing different user experiences without changing the actual user 
 
 ## Default Credentials
 
-- Admin: admin@example.com / Password123!
-- Free User: user1@example.com / Password123!
-- Paid User: user2@example.com / Password123!
+- Admin: admin@example.com / password
+- Free User: free@example.com / password
+- Paid User: paid@example.com / password
 
 ## API Documentation
 
@@ -169,11 +252,8 @@ For the deployed version:
 https://super-todo-system-production.up.railway.app/api/docs
 ```
 
-### Key Endpoints
+### API debug tables
 
-- **Authentication**: `/api/auth/login`, `/api/auth/register`
-- **Tasks**: `/api/tasks`
-- **Users**: `/api/users`
 - **Debug**: `/api/debug/tables`, `/api/debug/tables/:tableName`
 
 ## Testing
