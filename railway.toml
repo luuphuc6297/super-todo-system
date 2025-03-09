@@ -8,4 +8,4 @@ restartPolicyMaxRetries = 5
 
 [environments]
 production.NODE_ENV = "production"
-production.PORT = "8080" 
+production.PORT = "8080"

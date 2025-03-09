@@ -28,7 +28,14 @@ async function bootstrap() {
     const versionEnable = configService.get<string>('app.versioning.enable')
 
     const logger = new Logger()
+
+    // Set NODE_ENV from app.env for consistency
     process.env.NODE_ENV = env
+
+    // Log environment variables for debugging
+    logger.log(`NODE_ENV: ${process.env.NODE_ENV}`, 'Environment')
+    logger.log(`APP_ENV: ${process.env.APP_ENV}`, 'Environment')
+    logger.log(`Configured env: ${env}`, 'Environment')
 
     // Middleware
     app.use(helmet())
@@ -58,19 +65,17 @@ async function bootstrap() {
     // Swagger
     await swaggerInit(app)
 
-    // Seed database
-    if (env === 'development') {
-      try {
-        const seedService = app.get(SeedService)
-        await seedService.seed()
-        logger.log('Database seeded successfully', 'SeedService')
-      } catch (error) {
-        logger.error(`Failed to seed database: ${error.message}`, error.stack, 'SeedService')
-      }
+    // Seed database in all environments when using in-memory database
+    try {
+      const seedService = app.get(SeedService)
+      await seedService.seed()
+      logger.log('Database seeded successfully', 'SeedService')
+    } catch (error) {
+      logger.error(`Failed to seed database: ${error.message}`, error.stack, 'SeedService')
     }
 
-    // Ensure we listen on all interfaces in production environment
-    const host = env === 'production' ? '0.0.0.0' : httpHost || 'localhost'
+    const isDevelopmentOrTest = env === 'development' || env === 'testing'
+    const host = isDevelopmentOrTest ? httpHost || 'localhost' : '0.0.0.0'
 
     // Prioritize Railway's PORT environment variable
     const serverPort = process.env.PORT || port || 8080
@@ -79,10 +84,10 @@ async function bootstrap() {
     await app.listen(serverPort, host)
 
     logger.log(`==========================================================`)
-    logger.log(`Environment: ${env}`, 'NestApplication')
+    logger.log(`Environment: ${env || 'production'}`, 'NestApplication')
     logger.log(`HTTP is ${httpEnable ? 'enabled' : 'disabled'}`, 'NestApplication')
     logger.log(`HTTP versioning is ${versionEnable ? 'enabled' : 'disabled'}`, 'NestApplication')
-    logger.log(`Server running on ${await app.getUrl()}`, 'NestApplication')
+    logger.log(`Server running on http://${host}:${serverPort}`, 'NestApplication')
     logger.log(`Listening on host: ${host}, port: ${serverPort}`, 'NestApplication')
     logger.log(`==========================================================`)
 

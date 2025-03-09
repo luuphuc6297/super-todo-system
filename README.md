@@ -24,39 +24,136 @@
 
 # Super Todo System
 
-A task management SaaS platform built with NestJS.
+A task management SaaS platform built with NestJS that offers different features based on user plans (free vs paid).
 
-## Description
+## Live Demo
 
-Super Todo System is a full-featured task management platform that offers different features based on user plans (free vs paid).
+The application is deployed on Railway at:
+- URL: [https://super-todo-system-production.up.railway.app/](https://super-todo-system-production.up.railway.app/)
+- Swagger Documentation: [https://super-todo-system-production.up.railway.app/api/docs](https://super-todo-system-production.up.railway.app/api/docs)
+
+**Note**: If you encounter any issues with the public domain, please clone the repository and run it locally.
+
+## Repository
+
+The source code is available on GitHub:
+[https://github.com/luuphuc6297/super-todo-system](https://github.com/luuphuc6297/super-todo-system)
 
 ## Features
 
 - Task management with CRUD operations
-- User role-based access control
-- Premium features for paid users
+- User role-based access control (Free vs Paid users)
+- Different data visibility based on user role
 - RESTful API with Swagger documentation
 
-## Installation
+## Setup Instructions
 
+### Prerequisites
+
+- Node.js (v18 or later)
+- pnpm (v8 or later)
+
+### Local Development
+
+1. Clone the repository:
 ```bash
-$ pnpm install
+git clone https://github.com/luuphuc6297/super-todo-system.git
+cd super-todo-system
 ```
 
-## Running the app
-
+2. Install dependencies:
 ```bash
-# development
-$ pnpm run start
-
-# watch mode
-$ pnpm run start:dev
-
-# production mode
-$ pnpm run start:prod
+pnpm install
 ```
 
-## Test
+3. Copy the environment file:
+```bash
+cp .env.example .env
+```
+
+4. Start the development server:
+```bash
+pnpm run start:dev
+```
+
+5. Access the application:
+- API: http://localhost:8080
+- Swagger Documentation: http://localhost:8080/api/docs
+
+## Architecture Decisions
+
+### Backend Architecture
+
+The application follows a modular architecture based on NestJS framework:
+
+1. **Modules**: Organized by domain (tasks, users, auth, etc.)
+2. **Controllers**: Handle HTTP requests and responses
+3. **Services**: Contain business logic
+4. **Repositories**: Handle data access
+5. **Models**: Define data structures
+6. **DTOs**: Define data transfer objects
+7. **Guards**: Handle authentication and authorization
+8. **Interceptors**: Process requests/responses (e.g., filtering data based on user role)
+9. **Middlewares**: Process requests (e.g., extracting user role from URL)
+
+### Database
+
+- In-memory SQLite database is used for simplicity and ease of setup
+- Sequelize ORM is used for database operations
+
+### Authentication
+
+- JWT-based authentication
+- Role-based access control (FREE, PAID, ADMIN)
+
+### User Role Recognition
+
+The system recognizes two types of users via URL parameter:
+- Free users: `/?userRole=free`
+- Paid users: `/?userRole=paid`
+
+This allows testing different user experiences without changing the actual user role in the database.
+
+## User Roles and Features
+
+### Free Plan Users
+
+- Can see basic todo information (title, status, dates)
+- Can perform CRUD operations on TodoItems
+- Cannot see or add notes to todos
+
+### Paid Plan Users
+
+- All features available to Free users
+- Can see and add notes for each todo
+- Additional features for task management
+
+### Admin Users
+
+- Full access to all features
+- Can manage users and their roles
+
+## Default Credentials
+
+- Admin: admin@example.com / Password123!
+- Free User: user1@example.com / Password123!
+- Paid User: user2@example.com / Password123!
+
+## API Documentation
+
+The API is documented using Swagger. After starting the application, you can access the documentation at:
+
+```
+http://localhost:8080/api/docs
+```
+
+For the deployed version:
+
+```
+https://super-todo-system-production.up.railway.app/api/docs
+```
+
+## Testing
 
 ```bash
 # unit tests
@@ -69,103 +166,18 @@ $ pnpm run test:e2e
 $ pnpm run test:cov
 ```
 
-## API Documentation
+## Assumptions and Notes
 
-After starting the application, you can access the Swagger documentation at:
+1. **User Role from URL**: The system allows overriding the user role via URL parameter (`/?userRole=free` or `/?userRole=paid`) for testing purposes. This doesn't change the actual user role in the database.
 
-```
-http://localhost:8080/api/docs
-```
+2. **Data Filtering**: When a free user accesses task data, the notes field is automatically filtered out from the response.
+
+3. **Security**: In a production environment, additional security measures would be implemented, such as rate limiting, HTTPS, and more robust authentication.
+
+4. **Database**: In-memory SQLite is used for simplicity. In a production environment, a more robust database like PostgreSQL would be used.
+
+5. **Deployment**: The application is deployed on Railway with an in-memory database, which means data will be reset when the service restarts.
 
 ## License
 
 This project is [MIT licensed](LICENSE).
-
-## Docker Guide
-
-### Requirements
-- Docker
-- Docker Compose
-
-### Installation and Running with Docker
-
-#### Development Environment
-
-```bash
-# Copy .env.example to .env
-cp .env.example .env
-
-# Start the application in development environment
-docker-compose -f docker-compose.dev.yml up -d
-
-# View logs
-docker-compose -f docker-compose.dev.yml logs -f
-```
-
-#### Production Environment
-
-```bash
-# Copy .env.example to .env and configure for production
-cp .env.example .env
-
-# Start the application in production environment
-docker-compose up -d
-
-# View logs
-docker-compose logs -f
-```
-
-### Version Management
-
-When changes are made and version needs to be updated:
-
-```bash
-# Stop current containers
-docker-compose down
-
-# Rebuild image with new changes
-docker-compose build
-
-# Restart with new image
-docker-compose up -d
-```
-
-### Useful Docker Commands
-
-```bash
-# View container status
-docker-compose ps
-
-# Stop all containers
-docker-compose down
-
-# Remove all containers and volumes
-docker-compose down -v
-
-# View logs of specific container
-docker-compose logs -f api
-
-# Access container shell
-docker-compose exec api sh
-```
-
-## SQLite Web UI & Seed Data
-
-The application includes:
-
-1. **SQLite Web UI**: A web-based interface to view and manage the SQLite database
-   - Access at http://localhost:8080 after starting the application with Docker
-   - View tables, run queries, and explore data
-
-2. **Seed Data**: Automatically populates the database with test data on startup
-   - Users (admin and regular users)
-   - Categories
-   - Tags
-   - Tasks
-   - Task-Tag relationships
-
-### Default Credentials
-
-- Admin: admin@example.com / Password123!
-- Free User: user1@example.com / Password123!
-- Paid User: user2@example.com / Password123!
