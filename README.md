@@ -46,6 +46,20 @@ The source code is available on GitHub:
 - Different data visibility based on user role
 - RESTful API with Swagger documentation
 
+## Debug APIs
+
+The application includes special debug endpoints to inspect the database tables:
+
+- **List All Tables**: `GET /api/debug/tables`
+  - Returns a list of all tables in the database
+  - Useful for understanding the database schema
+
+- **View Table Data**: `GET /api/debug/tables/:tableName`
+  - Returns all records from the specified table
+  - Replace `:tableName` with the name of the table you want to view (e.g., `users`, `tasks`, `categories`)
+
+These endpoints are particularly useful when working with the in-memory database to verify data structure and content.
+
 ## Setup Instructions
 
 ### Prerequisites
@@ -79,6 +93,7 @@ pnpm run start:dev
 5. Access the application:
 - API: http://localhost:8080
 - Swagger Documentation: http://localhost:8080/api/docs
+- Debug Tables: http://localhost:8080/api/debug/tables
 
 ## Architecture Decisions
 
@@ -100,6 +115,7 @@ The application follows a modular architecture based on NestJS framework:
 
 - In-memory SQLite database is used for simplicity and ease of setup
 - Sequelize ORM is used for database operations
+- Database tables can be inspected using the debug APIs
 
 ### Authentication
 
@@ -152,6 +168,13 @@ For the deployed version:
 ```
 https://super-todo-system-production.up.railway.app/api/docs
 ```
+
+### Key Endpoints
+
+- **Authentication**: `/api/auth/login`, `/api/auth/register`
+- **Tasks**: `/api/tasks`
+- **Users**: `/api/users`
+- **Debug**: `/api/debug/tables`, `/api/debug/tables/:tableName`
 
 ## Testing
 

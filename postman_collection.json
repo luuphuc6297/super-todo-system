@@ -59,6 +59,126 @@
       "description": "Authentication endpoints"
     },
     {
+      "name": "Debug",
+      "item": [
+        {
+          "name": "List All Tables",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/debug/tables",
+              "host": ["{{baseUrl}}"],
+              "path": ["debug", "tables"]
+            },
+            "description": "Get a list of all tables in the database"
+          },
+          "response": []
+        },
+        {
+          "name": "View Users Table",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/debug/tables/users",
+              "host": ["{{baseUrl}}"],
+              "path": ["debug", "tables", "users"]
+            },
+            "description": "Get all records from the users table"
+          },
+          "response": []
+        },
+        {
+          "name": "View Tasks Table",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/debug/tables/tasks",
+              "host": ["{{baseUrl}}"],
+              "path": ["debug", "tables", "tasks"]
+            },
+            "description": "Get all records from the tasks table"
+          },
+          "response": []
+        },
+        {
+          "name": "View Categories Table",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/debug/tables/categories",
+              "host": ["{{baseUrl}}"],
+              "path": ["debug", "tables", "categories"]
+            },
+            "description": "Get all records from the categories table"
+          },
+          "response": []
+        },
+        {
+          "name": "View Tags Table",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/debug/tables/tags",
+              "host": ["{{baseUrl}}"],
+              "path": ["debug", "tables", "tags"]
+            },
+            "description": "Get all records from the tags table"
+          },
+          "response": []
+        },
+        {
+          "name": "View Task-Tags Table",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/debug/tables/task_tags",
+              "host": ["{{baseUrl}}"],
+              "path": ["debug", "tables", "task_tags"]
+            },
+            "description": "Get all records from the task_tags table"
+          },
+          "response": []
+        }
+      ],
+      "description": "Debug endpoints for inspecting database tables"
+    },
+    {
       "name": "Tasks",
       "item": [
         {
