@@ -5,11 +5,11 @@ import { NestApplication, NestFactory } from '@nestjs/core'
 import { useContainer } from 'class-validator'
 import * as compression from 'compression'
 import helmet from 'helmet'
-import { SeedService } from './infrastructures/seed/services/seed.service'
-import swaggerInit from './swagger'
 import { UserRoleFilterInterceptor } from './infrastructures/authentication/interceptors/user-role-filter.interceptor'
 import { ResponseInterceptor } from './infrastructures/http/interceptors/response.interceptor'
 import { ResponseService } from './infrastructures/http/services/response.service'
+import { SeedService } from './infrastructures/seed/services/seed.service'
+import swaggerInit from './swagger'
 
 async function bootstrap() {
   try {
@@ -33,16 +33,7 @@ async function bootstrap() {
     // Middleware
     app.use(helmet())
     app.use(compression())
-
-    // CORS
-    if (env === 'production') {
-      app.enableCors({
-        origin: '*', // Hoặc cấu hình domain cụ thể nếu cần
-        methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
-        credentials: true,
-      });
-      logger.log('CORS enabled for production', 'NestApplication');
-    }
+    app.enableCors()
 
     // Global prefix
     app.setGlobalPrefix(globalPrefix)
@@ -96,20 +87,20 @@ async function bootstrap() {
     logger.log(`==========================================================`)
 
     // Handle shutdown gracefully
-    const signals = ['SIGTERM', 'SIGINT'];
-    
+    const signals = ['SIGTERM', 'SIGINT']
+
     for (const signal of signals) {
       process.on(signal, async () => {
-        logger.log(`Received ${signal}, gracefully shutting down...`, 'NestApplication');
-        await app.close();
-        logger.log('Application shut down successfully', 'NestApplication');
-        process.exit(0);
-      });
+        logger.log(`Received ${signal}, gracefully shutting down...`, 'NestApplication')
+        await app.close()
+        logger.log('Application shut down successfully', 'NestApplication')
+        process.exit(0)
+      })
     }
   } catch (error) {
-    console.error('Failed to start application:', error);
-    process.exit(1);
+    console.error('Failed to start application:', error)
+    process.exit(1)
   }
 }
 
-bootstrap();
+bootstrap()

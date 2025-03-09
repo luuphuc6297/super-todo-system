@@ -1,6 +1,5 @@
 import { forwardRef, Module } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
-import { JwtModule } from '@nestjs/jwt'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { AuthenticationModule } from './authentication/authentication.module'
 import { DatabaseModule } from './database/database.module'
@@ -18,16 +17,6 @@ import configs from '@configs/index'
       isGlobal: true,
       cache: true,
     }),
-    JwtModule.registerAsync({
-      imports: [ConfigModule],
-      inject: [ConfigService],
-      useFactory: (configService: ConfigService) => ({
-        secret: configService.get<string>('auth.jwt.secret'),
-        signOptions: {
-          expiresIn: configService.get<string>('auth.jwt.expiresIn'),
-        },
-      }),
-    }),
     TypeOrmModule,
     DatabaseModule,
     AuthenticationModule,
@@ -39,7 +28,6 @@ import configs from '@configs/index'
   ],
   exports: [
     ConfigModule,
-    JwtModule,
     TypeOrmModule,
     DatabaseModule,
     AuthenticationModule,
