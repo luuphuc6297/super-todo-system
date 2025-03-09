@@ -45,8 +45,6 @@ export class TaskController {
       join: true,
     }
 
-    // The UserRoleMiddleware and UserRoleFilterInterceptor will handle the userRole parameter
-    // and filter the response accordingly
     return this.taskService.findAll(options)
   }
 
@@ -95,7 +93,7 @@ export class TaskController {
   }
 
   @Put(':id')
-  @Auth(UserRole.PAID, UserRole.ADMIN)
+  @Auth(UserRole.PAID, UserRole.ADMIN, UserRole.FREE)
   @ApiOperation({ summary: 'Update task' })
   @ApiResponse({
     status: 200,
@@ -116,7 +114,7 @@ export class TaskController {
   }
 
   @Delete(':id')
-  @Auth(UserRole.ADMIN)
+  @Auth(UserRole.ADMIN, UserRole.PAID, UserRole.FREE)
   @ApiOperation({ summary: 'Delete task' })
   @ApiResponse({
     status: 200,
