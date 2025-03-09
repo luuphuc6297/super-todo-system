@@ -65,7 +65,7 @@ export class TaskController {
   }
 
   @Post()
-  @Auth(UserRole.PAID, UserRole.ADMIN)
+  @Auth(UserRole.PAID, UserRole.ADMIN, UserRole.FREE)
   @ApiOperation({ summary: 'Create task' })
   @ApiResponse({
     status: 201,
